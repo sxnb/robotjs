@@ -4,7 +4,12 @@ module.exports = robotjs;
 
 module.exports.screen = {};
 
-function bitmap(width, height, byteWidth, bitsPerPixel, bytesPerPixel, image) 
+function toHex(n)
+{
+    return n.toString(16).padStart(2, '0');
+}
+
+function bitmap(width, height, byteWidth, bitsPerPixel, bytesPerPixel, image)
 {
     this.width = width;
     this.height = height;
@@ -15,9 +20,19 @@ function bitmap(width, height, byteWidth, bitsPerPixel, bytesPerPixel, image)
 
     this.colorAt = function(x, y)
     {
-        return robotjs.getColor(this, x, y);
-    };
+        if (typeof x !== 'number' || typeof y !== 'number') {
+            throw new Error(`Invalid number`);
+        }
 
+        const buffer = this.image;
+        const startIndex = (y * this.width + x) * this.bytesPerPixel;
+
+        if (x < 0 || x >= this.width || y < 0 || y >= this.height || typeof buffer[startIndex + 2] === 'undefined') {
+            throw new Error(`(${x}, ${y}) are outside the bitmap`);
+        }
+
+        return `${toHex(buffer[startIndex + 2])}${toHex(buffer[startIndex + 1])}${toHex(buffer[startIndex])}`;
+    };
 }
 
 module.exports.screen.capture = function(x, y, width, height)
@@ -27,7 +42,7 @@ module.exports.screen.capture = function(x, y, width, height)
     {
         b = robotjs.captureScreen(x, y, width, height);
     }
-    else 
+    else
     {
         b = robotjs.captureScreen();
     }
