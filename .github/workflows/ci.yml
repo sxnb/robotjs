@@ -33,19 +33,19 @@ jobs:
     env:
       BUILD_GROUP: ${{ matrix.build-group }}
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: '16'
         architecture: ${{ matrix.arch }}
     - name: Install linux dependencies
       if: startsWith(matrix.os, 'ubuntu')
       run: sudo apt-get install libxtst-dev libpng++-dev
-    - run: npm install
+    - run: npm ci
     - name: Prebuildify
       run: npm run prebuild-$BUILD_GROUP
       shell: bash
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: prebuilds
         path: prebuilds/
@@ -55,17 +55,18 @@ jobs:
     runs-on: ubuntu-20.04
     needs: build
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/download-artifact@v2
+    - uses: actions/checkout@v3
+    - uses: actions/download-artifact@v3
       with:
         name: prebuilds
         path: prebuilds
-    - uses: phips28/gh-action-bump-version@608cab1205a5560a93eb66b4a64e4acf2119597b
+    - uses: phips28/gh-action-bump-version@95099cd5edcdae43499bc94202b9d907e739e9c8
       with:
         tag-prefix: 'v'
+        version-type: 'patch'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - uses: actions/setup-node@v2
+    - uses: actions/setup-node@v3
       with:
         node-version: '16'
         registry-url: 'https://registry.npmjs.org'
