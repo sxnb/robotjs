@@ -59,8 +59,8 @@ Napi::Value dragMouseWrapper(const Napi::CallbackInfo& info)
 return env.Null();
 	}
 
-	const uint32_t x = info[0].As<Napi::Number>().UInt32Value();
-	const uint32_t y = info[1].As<Napi::Number>().UInt32Value();
+	const uint32_t x = info[0].As<Napi::Number>().Uint32Value();
+	const uint32_t y = info[1].As<Napi::Number>().Uint32Value();
 	MMMouseButton button = LEFT_BUTTON;
 
 	if (info.Length() == 3)
@@ -108,8 +108,8 @@ Napi::Value moveMouseWrapper(const Napi::CallbackInfo& info)
 return env.Null();
 	}
 
-	uint32_t x = info[0].As<Napi::Number>().UInt32Value();
-	uint32_t y = info[1].As<Napi::Number>().UInt32Value();
+	uint32_t x = info[0].As<Napi::Number>().Uint32Value();
+	uint32_t y = info[1].As<Napi::Number>().Uint32Value();
 
 	MMSignedPoint point;
 	point = MMSignedPointMake(x, y);
@@ -128,14 +128,14 @@ Napi::Value moveMouseSmoothWrapper(const Napi::CallbackInfo& info)
 		Napi::Error::New(env, "Invalid number of arguments.").ThrowAsJavaScriptException();
 return env.Null();
 	}
-	size_t x = info[0].As<Napi::Number>().UInt32Value();
-	size_t y = info[1].As<Napi::Number>().UInt32Value();
+	size_t x = info[0].As<Napi::Number>().Uint32Value();
+	size_t y = info[1].As<Napi::Number>().Uint32Value();
 
 	MMPoint point;
 	point = MMPointMake(x, y);
 	if (info.Length() == 3)
 	{
-		size_t speed = info[2].As<Napi::Number>().UInt32Value();
+		size_t speed = info[2].As<Napi::Number>().Uint32Value();
 		smoothlyMoveMouse(point, speed);
 	}
 	else
@@ -277,7 +277,7 @@ Napi::Value setMouseDelayWrapper(const Napi::CallbackInfo& info)
 return env.Null();
 	}
 
-	mouseDelay = info[0].As<Napi::Number>().UInt32Value();
+	mouseDelay = info[0].As<Napi::Number>().Uint32Value();
 
 	return Napi::Number::New(env, 1);
 }
@@ -292,8 +292,8 @@ Napi::Value scrollMouseWrapper(const Napi::CallbackInfo& info)
 return env.Null();
 	}
 
-	int x = info[0].As<Napi::Number>().UInt32Value();
-	int y = info[1].As<Napi::Number>().UInt32Value();
+	int x = info[0].As<Napi::Number>().Uint32Value();
+	int y = info[1].As<Napi::Number>().Uint32Value();
 
 	scrollMouse(x, y);
 	microsleep(mouseDelay);
@@ -643,7 +643,7 @@ Napi::Value unicodeTapWrapper(const Napi::CallbackInfo& info)
 {
 	Napi::Env env = info.Env();
 
-	size_t value = info[0].As<Napi::Number>().UInt32Value();
+	size_t value = info[0].As<Napi::Number>().Uint32Value();
 
 	if (value != 0) {
 		unicodeTap(value);
@@ -684,7 +684,7 @@ Napi::Value typeStringDelayedWrapper(const Napi::CallbackInfo& info)
 
 		s = str.c_str();
 
-	size_t cpm = info[1].As<Napi::Number>().UInt32Value();
+	size_t cpm = info[1].As<Napi::Number>().Uint32Value();
 
 		typeStringDelayed(s, cpm);
 
@@ -705,7 +705,7 @@ Napi::Value setKeyboardDelayWrapper(const Napi::CallbackInfo& info)
 return env.Null();
 	}
 
-	keyboardDelay = info[0].As<Napi::Number>().UInt32Value();
+	keyboardDelay = info[0].As<Napi::Number>().Uint32Value();
 
 	return Napi::Number::New(env, 1);
 }
@@ -744,8 +744,8 @@ return env.Null();
 	MMBitmapRef bitmap;
 	MMRGBHex color;
 
-	size_t x = info[0].As<Napi::Number>().UInt32Value();
-	size_t y = info[1].As<Napi::Number>().UInt32Value();
+	size_t x = info[0].As<Napi::Number>().Uint32Value();
+	size_t y = info[1].As<Napi::Number>().Uint32Value();
 
 	if (!pointVisibleOnMainDisplay(MMPointMake(x, y)))
 	{
@@ -823,10 +823,10 @@ Napi::Value captureScreenWrapper(const Napi::CallbackInfo& info)
 		//TODO: Make sure requested coords are within the screen bounds, or we get a seg fault.
 		// 		An error message is much nicer!
 
-		x = info[0].As<Napi::Number>().UInt32Value();
-		y = info[1].As<Napi::Number>().UInt32Value();
-		w = info[2].As<Napi::Number>().UInt32Value();
-		h = info[3].As<Napi::Number>().UInt32Value();
+		x = info[0].As<Napi::Number>().Uint32Value();
+		y = info[1].As<Napi::Number>().Uint32Value();
+		w = info[2].As<Napi::Number>().Uint32Value();
+		h = info[3].As<Napi::Number>().Uint32Value();
 	}
 	else
 	{
@@ -902,8 +902,8 @@ Napi::Value getColorWrapper(const Napi::CallbackInfo& info)
 	MMBitmapRef bitmap;
 	MMRGBHex color;
 
-	size_t x = info[1].As<Napi::Number>().UInt32Value();
-	size_t y = info[2].As<Napi::Number>().UInt32Value();
+	size_t x = info[1].As<Napi::Number>().Uint32Value();
+	size_t y = info[2].As<Napi::Number>().Uint32Value();
 
 	//Get our image object from JavaScript.
 	BMP img = buildBMP(info[0].ToObject());
