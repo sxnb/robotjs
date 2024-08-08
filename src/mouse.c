@@ -395,9 +395,12 @@ bool smoothlyMoveMouse(MMPoint endPoint,double speed)
 
 		/* Make sure we are in the screen boundaries!
 		 * (Strange things will happen if we are not.) */
+
+/**
 		if (pos.x >= screenSize.width || pos.y >= screenSize.height) {
 			return false;
 		}
+*/
 
 		moveMouse(MMSignedPointMake((int32_t)pos.x, (int32_t)pos.y));
 
