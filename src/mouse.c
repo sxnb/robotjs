@@ -402,7 +402,7 @@ bool smoothlyMoveMouse(MMPoint endPoint,double speed)
 		}
 */
 
-		moveMouse(MMSignedPointMake((int32_t)pos.x, (int32_t)pos.y));
+		moveMouse(MMSignedPointMake((uint32_t)pos.x, (uint32_t)pos.y));
 
 		/* Wait 1 - (speed) milliseconds. */
 		microsleep(DEADBEEF_UNIFORM(0.7, speed));

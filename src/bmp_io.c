@@ -42,8 +42,8 @@ typedef uint32_t BMP_COMPRESSION;
  */
 struct BITMAP_INFO_HEADER {
 	uint32_t headerSize;         /* The size of this header (40 bytes). */
-	int32_t width;               /* The bitmap width in pixels. */
-	int32_t height;              /* The bitmap height in pixels. */
+	uint32_t width;               /* The bitmap width in pixels. */
+	uint32_t height;              /* The bitmap height in pixels. */
 	                             /* (A negative value denotes that the image
 								  * is flipped.) */
 	uint16_t colorPlanes;        /* The number of color planes; must be 1. */
@@ -51,8 +51,8 @@ struct BITMAP_INFO_HEADER {
 	                              * 24, or 32). */
 	BMP_COMPRESSION compression; /* The compression method being used. */
 	uint32_t imageSize;          /* Size of the bitmap in bytes (unreliable).*/
-	int32_t xRes;                /* The horizontal resolution (unreliable). */
-	int32_t yRes;                /* The vertical resolution (unreliable). */
+	uint32_t xRes;                /* The horizontal resolution (unreliable). */
+	uint32_t yRes;                /* The vertical resolution (unreliable). */
 	uint32_t colorsUsed;         /* The number of colors in the color table,
 	                              * or 0 to default to 2^n. */
 	uint32_t colorsImportant;    /* Colors important for displaying bitmap,
@@ -280,8 +280,8 @@ uint8_t *createBitmapData(MMBitmapRef bitmap, size_t *len)
 	/* Copy Windows v3 header. */
 	dibHeader = (struct BITMAP_INFO_HEADER *)(data + sizeof(*fileHeader));
 	dibHeader->headerSize = sizeof(*dibHeader); /* Should always be 40. */
-	dibHeader->width = (int32_t)bitmap->width;
-	dibHeader->height = -(int32_t)bitmap->height; /* Our bitmaps are "flipped". */
+	dibHeader->width = (uint32_t)bitmap->width;
+	dibHeader->height = -(uint32_t)bitmap->height; /* Our bitmaps are "flipped". */
 	dibHeader->colorPlanes = 1;
 	dibHeader->bitsPerPixel = bitmap->bitsPerPixel;
 	dibHeader->compression = kBMP_RGB; /* Don't save with compression. */
